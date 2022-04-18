@@ -59,6 +59,8 @@ print(f"Početna masa je {round(masa[0],2)}.\n")
 print(f"Današnja masa je {round(masa[-1],2)}.\n")
 print(f"Ukupna razlika mase je {round(razlika_mase,2)}.\n")
 print(f"Najniža masa je {min(masa)} kg.\n")
+print(f"Najniži BMI je {round(min(BMI),2)} kg/m^2.\n")
+
 
 #if mass is higher, lower, or equal to the day before -> Do something
 if(razlika_BMI_jucer > 0):
