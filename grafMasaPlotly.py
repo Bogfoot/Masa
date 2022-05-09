@@ -14,13 +14,14 @@ def line_fit(x, k, l):
 
 def rolling_median(mase, br_dana):
     br_mj = int(len(mase)/br_dana)+1
-    average = [masa/len(mase) for masa in mase]
     average_br_dana = []
     for i in range(br_mj):
         if(len(mase[i*br_dana:]) < br_dana):
             average_br_dana.append(np.mean(mase[i*br_dana:]))
+            print(np.mean(mase[i*br_dana:]))
         else:
             average_br_dana.append(np.mean(mase[i*br_mj:i*br_mj+br_dana]))
+            print(np.mean(mase[i*br_mj:i*br_mj+br_dana]))
 
     return np.array(average_br_dana)
 
@@ -34,7 +35,7 @@ BMI = np.array([mass/(height**2) for mass in masa])
 df["BMI"] = BMI
 
 k, l = np.polyfit(x, y, 1)
-print(f"k = {k}\nl = {l}")
+print(f"k = {k}\n\nl = {l}")
 
 #1. slika
 name_m = "Promjena mase u vremenu za A.U."
@@ -45,6 +46,9 @@ fig.add_trace(go.Scatter( x = x, y = line_fit(x, k, l),name = name_m + " linear 
 name_BMI = "Promjena BMI u vremenu za A.U." 
 fig2 = go.Figure()
 fig2.add_trace(go.Scatter( x=x, y=BMI, name=name_BMI))
+
+pio.write_image(fig, "Slike/" + name_m + ".png", width=2000, height=2000)
+pio.write_image(fig2, "Slike/" + name_BMI + ".png", width=2000, height=2000)
 
 #Output
 print(f"Prvi dan ti je BMI bio {round(BMI[0],2)} kg/m^2.\n")
@@ -84,9 +88,6 @@ average_br_dana = rolling_median(masa, 30)
 print(f"Srednja masa prvi misec je {round(average_br_dana[0],2)}kg.\n")
 if len(masa) >= 60:
     print(f"Srednja masa prošli misec je {round(average_br_dana[-2],2)}kg.\n")
-if len(masa) >= 30:
+elif len(masa) >= 30:
     print(f"Srednja masa ovaj misec je {round(average_br_dana[-1],2)}kg.\n")
-
-
-pio.write_image(fig, "Slike/" + name_m + ".png", width=2000, height=2000)
-pio.write_image(fig2, "Slike/" + name_BMI + ".png", width=2000, height=2000)
+print(average_br_dana)
