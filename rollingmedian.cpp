@@ -50,7 +50,7 @@ auto FillDataFromFile(std::vector<Masa> &podaci, const int LineCount,
   }
 }
 
-auto rolling_median(std::vector<Masa> array, std::vector<double> &result)
+auto RollingMedian(std::vector<Masa> array, std::vector<double> &result)
     -> std::vector<double> {
   double sum = 0.0;
   for (int i = 0; i < array.size(); i++) {
@@ -70,8 +70,8 @@ auto rolling_median(std::vector<Masa> array, std::vector<double> &result)
   return result;
 }
 
-auto Save_to_File(std::ofstream &out, std::vector<double> results,
-                  std::string out_file) -> void {
+auto SaveToFile(std::ofstream &out, std::vector<double> results,
+                std::string out_file) -> void {
   out.open(out_file, std::ios::out);
   for (auto i : results) {
     out << i << std::endl;
@@ -79,19 +79,31 @@ auto Save_to_File(std::ofstream &out, std::vector<double> results,
   out.close();
 }
 
+auto ListResults(std::vector<double> results) -> void {
+  for (auto i : results) {
+    std::cout << i << std::endl;
+  }
+}
 auto main() -> int {
   std::vector<Masa> array;
   std::string file = "masa.csv";
+
   int lines = CountLines(file);
+
   std::cout << "Broj linija u " << file << "-u = " << lines << std::endl;
+
   FillDataFromFile(array, lines, file);
+
   std::vector<double> result;
-  rolling_median(array, result);
+
+  RollingMedian(array, result);
+
   std::ofstream out("");
   std::string out_file = "rolling_median.csv";
-  Save_to_File(out, result, out_file);
-  for (auto i : result) {
-    std::cout << i << std::endl;
-  }
+
+  SaveToFile(out, result, out_file);
+
+  ListResults(result);
+
   std::cout << "Broj točaka: " << result.size() << std::endl;
 }
