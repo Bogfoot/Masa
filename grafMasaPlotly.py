@@ -3,6 +3,7 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly.io as pio
 import os
+import math
 
 np.set_printoptions(precision=3, suppress=False)
 
@@ -16,13 +17,10 @@ def rolling_median(mase, br_dana):
     br_mj = int(len(mase)/br_dana)+1
     average_br_dana = []
     for i in range(br_mj):
-        if(len(mase[i*br_dana:]) < br_dana):
+        if(len(mase[i*br_dana:]) <= br_dana):
             average_br_dana.append(np.mean(mase[i*br_dana:]))
-            print(np.mean(mase[i*br_dana:]))
         else:
             average_br_dana.append(np.mean(mase[i*br_mj:i*br_mj+br_dana]))
-            print(np.mean(mase[i*br_mj:i*br_mj+br_dana]))
-
     return np.array(average_br_dana)
 
 height = 1.76
@@ -84,10 +82,10 @@ X = 85
 br_d_do_X = (X - l)/k - br_dana
 print(f"Broj dana do {X} kg je cca.: {round(br_d_do_X,2)} ({round(br_d_do_X/7,2)} tjedana.)\n")
 
-average_br_dana = rolling_median(masa, 30)
+average_br_dana = rolling_median(masa, 7)
+average_br_dana = [x for x in average_br_dana if math.isnan(x) == False]
 print(f"Srednja masa prvi misec je {round(average_br_dana[0],2)}kg.\n")
 if len(masa) >= 60:
     print(f"Srednja masa prošli misec je {round(average_br_dana[-2],2)}kg.\n")
 elif len(masa) >= 30:
     print(f"Srednja masa ovaj misec je {round(average_br_dana[-1],2)}kg.\n")
-print(average_br_dana)
