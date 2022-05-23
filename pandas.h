@@ -19,7 +19,7 @@ auto SaveToFile(std::ofstream &out, std::vector<double> results,
 auto ListResults(std::vector<double> results) -> void {
   int j = 0;
   for (auto i : results) {
-    std::cout << std::setw(3) << j + 1 << "," << std::setw(10) << i
+    std::cout << std::setw(3) << j + 1 << "-ti tjedan," << std::setw(10) << i
               << std::setprecision(6) << std::endl;
     j++;
   }
