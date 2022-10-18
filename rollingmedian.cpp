@@ -3,6 +3,7 @@ struct Masa {
   int dan;
   double masa;
 };
+
 auto RollingMedian(std::vector<Masa> array, std::vector<double> &result,
                    const int dani) -> std::vector<double>;
 
@@ -15,7 +16,6 @@ auto main(int argc, char *argv[]) -> int {
   std::vector<double> result;
   const int dani = 7;
   RollingMedian(array, result, dani);
-
   // Create an output stream
   std::ofstream out;
   // Give a name to the file
@@ -38,7 +38,6 @@ auto RollingMedian(std::vector<Masa> array, std::vector<double> &result,
     }
     sum += array[i].masa / dani;
   }
-
   sum = 0.0;
   int devidor = array.size() / dani;
   int remainder = array.size() % dani;
@@ -48,6 +47,5 @@ auto RollingMedian(std::vector<Masa> array, std::vector<double> &result,
     }
   }
   result.push_back(sum);
-
   return result;
 }
