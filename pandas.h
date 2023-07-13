@@ -61,7 +61,7 @@ auto FillDataFromFile(std::vector<T> &podaci, const int LineCount,
     // Cita liniju po liniju dok ne dode do kraja filea \^]
     while (std::getline(fs, line)) {
       std::stringstream ss(line);
-      ss >> dan >> comma >> masa;
+      ss >> masa >> comma >> dan;
       // comma je ',' jer njega trebamo ignorirati
       podaci[count].dan = dan;
       podaci[count].masa = masa;
