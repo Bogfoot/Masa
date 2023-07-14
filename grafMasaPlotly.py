@@ -39,15 +39,20 @@ masa = np.array([mass for mass in df["Masa"]])
 BMI = np.array([mass / (height**2) for mass in masa])
 df["BMI"] = BMI
 
-k, l = np.polyfit(np.linspace(0, len(y), len(y)), y, 1)
+k, l = np.polyfit(np.linspace(0, len(y), len(y)), df["Masa"], 1)
 print(f"k = {k}\n\nl = {l}")
 
 # 1. slika
 name_m = "Promjena mase u vremenu za A.U."
 fig = go.Figure()
-fig.add_trace(go.Scatter(x=x, y=y, name=name_m))
+fig.add_trace(go.Scatter(x=df["Dan"], y=df["Masa"], name=name_m))
 fig.add_trace(
-    go.Scatter(x=x, y=line_fit(y, k, l), name=name_m + " linear fit", mode="markers")
+    go.Scatter(
+        x=df["Dan"],
+        y=line_fit(df["Masa"], k, l),
+        name=name_m + " linear fit",
+        mode="markers",
+    )
 )
 # 2. slika
 name_BMI = "Promjena BMI u vremenu za A.U."
@@ -84,7 +89,7 @@ elif razlika_BMI_jucer == 0:
     print(f"Razlika BMI od jučer je {round(razlika_BMI_jucer,2)} kg/m^2\n")
 else:
     print(
-        f"Smrade, skidaj kile ili umri. Udeblja si se od jučer za {round(razlika_mase_jucer,2)} kg.\n"
+        f"Smrade, skidaj kile ili umri. Udeblja si se od jučer za {-round(razlika_mase_jucer,2)} kg.\n"
     )
     print(
         f"Razlika BMI od jučer je loša stari: {round(razlika_BMI_jucer,2)} kg/m^2, smanji hranu pederu. Vježbaj, pička ti materina.\n"
